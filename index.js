@@ -30,7 +30,7 @@ if (!Array.isArray(blacklist)) {
 
 var SONOS = require('sonos')
 var Sonos = SONOS.Sonos
-var sonos = new Sonos(config.get('sonos'));
+var sonos = new Sonos(config.get('sonosIP'), config.get('sonosPort'));
 
 if (market !== "US") {
       sonos.setSpotifyRegion(SONOS.SpotifyRegion.EU);
