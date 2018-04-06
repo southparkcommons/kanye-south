@@ -51,7 +51,7 @@ var gongMessage = [
 ];
 
 var voteCounter = 0;
-var voteLimit = 3;
+var voteLimit = 2;
 var voteLimitPerUser = 1;
 var voteScore = {};
 var gongBanned = false;
@@ -178,7 +178,6 @@ slack.on(RTM_EVENTS.MESSAGE, (message) => {
   }
 
   var input = text.split(' ');
-  console.log(input);
   var term = input[0].toLowerCase();
   var matched = true;
   _log('term', term);
@@ -434,7 +433,8 @@ function _gong(channel, userName) {
       _slackMessage(randomMessage + " This is GONG " + gongCounter + "/" + gongLimit + " for " + track, channel.id);
       if (gongCounter >= gongLimit) {
         _slackMessage("The music got GONGED!!", channel.id);
-        _nextTrack(channel, true)
+        _gongPlay(channel)
+        setTimeout(() => _nextTrack(channel, true), 7000);
         gongCounter = 0;
         gongScore = {}
       }
@@ -616,12 +616,7 @@ function _say(input, channel) {
 }
 
 function _gongPlay(channel) {
-
-  console.log("CALLED");
-  if (channel.name !== adminChannel) {
-    return
-  }
-  sonos.play('https://s3.amazonaws.com/misc-assets-transcend/A-Tone-His_Self-1266414414.mp3', function(err, playing) {
+  sonos.play('spotify:track:1x1xPU5ysahIAz6iKGo8pq', function(err, playing) {
     _log([err, playing])
   });
 }
