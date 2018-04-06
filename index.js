@@ -432,7 +432,7 @@ function _gong(channel, userName) {
       gongCounter++;
       _slackMessage(randomMessage + " This is GONG " + gongCounter + "/" + gongLimit + " for " + track, channel.id);
       if (gongCounter >= gongLimit) {
-        _slackMessage("The music got GONGED!!", channel.id);
+        _slackMessage("Imma let you finish but...the music got GONGED!!", channel.id);
         _gongPlay(channel)
         setTimeout(() => _nextTrack(channel, true), 7000);
         gongCounter = 0;
@@ -452,7 +452,7 @@ function _vote(channel, userName) {
     }
 
     if (voteScore[userName] >= voteLimitPerUser) {
-      _slackMessage("Are you trying to cheat, " + userName + "? DENIED!", channel.id)
+      _slackMessage("Don't cheat, " + userName + "? DENIED!", channel.id)
     } else {
       if (userName in gongScore) {
         _slackMessage("Changed your mind, " + userName + "? Well, ok then...", channel.id);
@@ -500,7 +500,7 @@ function _help(input, channel) {
   if (channel.name == adminChannel) {
     message += '------ ADMIN FUNCTIONS ------\n' + '`flush` : flush the current queue\n' + '`setvolume` _number_ : sets volume\n' + '`play` : play track\n' + '`stop` : stop life\n' + '`pause` : pause life\n' + '`resume` : resume after pause\n' + '`next` : play next track\n' + '`previous` : play previous track\n' + '`shuffle` : shuffle playlist\n' + '`blacklist` : show users on blacklist\n' + '`blacklist add @username` : add `@username` to the blacklist\n' + '`blacklist del @username` : remove `@username` from the blacklist\n';
   }
-  message += '========== ZenMusic@GitHub ===========\n'
+  message += '========== This is Kanye South Park Commons everybody ===========\n'
   _slackMessage(message, channel.id);
 }
 
@@ -664,7 +664,7 @@ function _currentTrack(channel, cb) {
         ? psec
         : '0' + psec;
 
-      var message = `We're rocking out to *${track.artist}* - *${track.title}* (${pmin}:${psec}/${fmin}:${fsec})`;
+      var message = `We're blasting *${track.artist}* - *${track.title}* (${pmin}:${psec}/${fmin}:${fsec})`;
       _slackMessage(message, channel.id);
     }
   });
