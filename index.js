@@ -1,9 +1,11 @@
-let urllibsync = require("urllib-sync");
+const urllibsync = require("urllib-sync");
 const urlencode = require("urlencode");
 const config = require("nconf");
 
+
+// Load environment variables and secrets off config.json
 config.argv().env().file({file: "config.json"}).defaults({
-  "adminChannel": "music-admin",
+  "adminChannel": "music",
   "standardChannel": "music",
   "maxVolume": "75",
   "market": "US",
@@ -16,7 +18,7 @@ const standardChannel = config.get("standardChannel");
 const token = config.get("token");
 const maxVolume = config.get("maxVolume");
 const market = config.get("market");
-const blacklist = config.get("blacklist");
+let blacklist = config.get("blacklist");
 const apiKey = config.get("apiKey");
 const searchLimit = config.get("searchLimit");
 if (!Array.isArray(blacklist)) {
@@ -237,6 +239,9 @@ slack.on(RTM_EVENTS.MESSAGE, (message) => {
   case "status":
     _status(channel);
     break;
+  case "hello":
+    _yeeeeezy(channel);
+    break;
   case "help":
     _help(input, channel);
     break;
@@ -308,8 +313,19 @@ function _getVolume(channel) {
 
   sonos.getVolume(function(err, vol) {
     _log(err, vol);
-    _slackMessage("Volume is " + vol + " deadly dB _(ddB)_", channel.id);
+    _slackMessage("Volume is " + vol + " dB", channel.id);
   });
+}
+
+function _yeeeeezy(channel) {
+  let asciiArt = ":plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white:\n" +
+  ":plain_white::zap::plain_white::plain_white::plain_white::zap::plain_white::zap::zap::zap::zap::plain_white::zap::zap::zap::zap::plain_white::zap::zap::zap::zap::zap::plain_white::zap::plain_white::plain_white::plain_white::zap::plain_white:\n" +
+  ":plain_white::plain_white::zap::plain_white::zap::plain_white::plain_white::zap::plain_white::plain_white::plain_white::plain_white::zap::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::zap::plain_white::plain_white::plain_white::zap::plain_white::zap::plain_white::plain_white:\n" +
+  ":plain_white::plain_white::plain_white::zap::plain_white::plain_white::plain_white::zap::zap::zap::plain_white::plain_white::zap::zap::zap::plain_white::plain_white::plain_white::plain_white::zap::plain_white::plain_white::plain_white::plain_white::plain_white::zap::plain_white::plain_white::plain_white:\n" +
+  ":plain_white::plain_white::plain_white::zap::plain_white::plain_white::plain_white::zap::plain_white::plain_white::plain_white::plain_white::zap::plain_white::plain_white::plain_white::plain_white::plain_white::zap::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::zap::plain_white::plain_white::plain_white:\n" +
+  ":plain_white::plain_white::plain_white::zap::plain_white::plain_white::plain_white::zap::zap::zap::zap::plain_white::zap::zap::zap::zap::plain_white::zap::zap::zap::zap::zap::plain_white::plain_white::plain_white::zap::plain_white::plain_white::plain_white:\n" +
+  ":plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white::plain_white:";
+  _slackMessage(asciiArt, channel.id);
 }
 
 function _setVolume(input, channel, userName) {
